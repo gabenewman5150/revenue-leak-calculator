@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local SEO Revenue Leak Calculator | Gabriel Newman</title>
+  <meta name="description" content="See exactly how much revenue your local business is losing to broken local SEO. Free interactive calculator grounded in published industry benchmarks." />
+
+  <!-- Open Graph / LinkedIn preview -->
+  <meta property="og:title" content="Local SEO Revenue Leak Calculator" />
+  <meta property="og:description" content="Most local businesses lose 30–60% of their potential customers to invisible search problems. See yours in 60 seconds." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #F4F2EB;
+      color: #1A1A1A;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+    h1, h2, h3 { margin: 0; }
+    p { margin: 0; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+    code { font-family: 'JetBrains Mono', monospace; }
+
+    /* Inputs */
+    input, select {
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .input-on-blue {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 0.5px solid rgba(232,192,90,0.25);
+      color: #FFFFFF;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .input-on-blue:focus {
+      outline: none;
+      border-color: rgba(232,192,90,0.7);
+      background: rgba(255,255,255,0.10);
+    }
+    select.input-on-blue option {
+      background: #0F1B3D;
+      color: #FFFFFF;
+    }
+    .label-on-blue {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 5px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8C05A;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+    .divider {
+      height: 1px;
+      background: rgba(232,192,90,0.18);
+      margin: 14px 0;
+    }
+
+    /* Card chrome */
+    .blue-card {
+      position: relative;
+      background: #0F1B3D;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+    .tri-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .tri-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .white-card {
+      background: #FFFFFF;
+      border: 0.5px solid #E5E2D8;
+      border-radius: 14px;
+    }
+
+    /* Buttons */
+    button {
+      font-family: inherit;
+    }
+    .method-toggle {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      text-align: left;
+      color: inherit;
+    }
+
+    /* Mobile */
+    @media (max-width: 720px) {
+      .page { padding: 1rem 0.75rem 3rem; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr !important; }
+      .hero-grid { grid-template-columns: 1fr !important; }
+      .hero-grid > div:last-child {
+        border-left: none !important;
+        border-top: 0.5px solid rgba(15,27,61,0.15);
+        padding-left: 0 !important;
+        padding-top: 1.25rem;
+        margin-top: 0.5rem;
+      }
+      .h1-main { font-size: 22px !important; }
+      .monthly-loss-num { font-size: 38px !important; }
+      .annual-loss-num { font-size: 26px !important; }
+    }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <h2 class="sr-only">Local SEO Revenue Leak Calculator — enter your business metrics to calculate how much revenue you're losing to broken local SEO. Includes methodology section.</h2>
+
+  <!-- HERO -->
+  <div class="white-card" style="padding: 2rem 1.75rem; margin-bottom: 1rem;">
+    <div style="display: inline-block; background: rgba(15,27,61,0.08); color: #0F1B3D; font-size: 11px; letter-spacing: 2px; padding: 5px 10px; border-radius: 4px; margin-bottom: 12px; font-weight: 500;">REVENUE LEAK CALCULATOR</div>
+    <h1 class="h1-main" style="font-size: 28px; font-weight: 600; margin: 0 0 6px; color: #0F1B3D; line-height: 1.15;">How much revenue is your<br/>local SEO leaking?</h1>
+    <p style="font-size: 14px; color: #5F5E5A; margin: 0; line-height: 1.5;">Most local businesses lose 30–60% of their potential customers to invisible search problems. See yours in 60 seconds.</p>
+  </div>
+
+  <!-- INPUTS -->
+  <div class="blue-card" style="padding: 1.5rem 1.5rem 1.25rem; margin-bottom: 1rem;">
+    <svg class="tri-bg" viewBox="0 0 700 700" preserveAspectRatio="xMaxYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="700,700 700,300 380,700" fill="none" stroke="#E8C05A" stroke-width="1.5" opacity="0.45"/>
+      <polygon points="680,680 680,420 480,680" fill="none" stroke="#E8C05A" stroke-width="1" opacity="0.30"/>
+      <polygon points="60,80 100,80 80,50" fill="none" stroke="#E8C05A" stroke-width="1" opacity="0.55"/>
+      <polygon points="180,140 215,140 197,115" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.40"/>
+      <polygon points="100,260 130,260 115,238" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.35"/>
+      <polygon points="160,290 185,290 172,272" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.45"/>
+      <polygon points="540,90 568,90 554,68" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.40"/>
+      <polygon points="610,180 635,180 622,160" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.30"/>
+      <polygon points="50,520 78,520 64,498" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.30"/>
+    </svg>
+
+    <div class="tri-content">
+      <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+        <div>
+          <label class="label-on-blue">Industry</label>
+          <select id="f-industry" class="input-on-blue">
+            <option value="legal">Legal / Law firm</option>
+            <option value="medical">Medical / Dental</option>
+            <option value="hvac" selected>HVAC / Plumbing / Electrical</option>
+            <option value="contractor">Home services / Contractor</option>
+            <option value="auto">Auto repair / Body shop</option>
+            <option value="fitness">Gym / Fitness studio</option>
+            <option value="restaurant">Restaurant / Food service</option>
+            <option value="salon">Salon / Spa / Beauty</option>
+            <option value="realestate">Real estate</option>
+            <option value="retail">Retail / Local shop</option>
+          </select>
+        </div>
+        <div>
+          <label class="label-on-blue">Average customer value ($)</label>
+          <input type="number" id="f-cv" value="450" min="0" step="10" class="input-on-blue" />
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">LEAK 1 · GOOGLE BUSINESS PROFILE</div>
+
+      <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+        <div>
+          <label class="label-on-blue">Monthly GBP profile views</label>
+          <input type="number" id="f-views" value="2400" min="0" step="100" class="input-on-blue" />
+        </div>
+        <div>
+          <label class="label-on-blue">Local pack ranking (1–10)</label>
+          <input type="number" id="f-rank" value="6" min="1" max="20" step="1" class="input-on-blue" />
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">LEAK 2 · REVIEWS &amp; REPUTATION</div>
+
+      <div class="grid-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+        <div>
+          <label class="label-on-blue">Star rating</label>
+          <input type="number" id="f-rating" value="4.2" min="1" max="5" step="0.1" class="input-on-blue" />
+        </div>
+        <div>
+          <label class="label-on-blue">Total reviews</label>
+          <input type="number" id="f-reviews" value="48" min="0" step="1" class="input-on-blue" />
+        </div>
+        <div>
+          <label class="label-on-blue">% reviews responded to</label>
+          <input type="number" id="f-respond" value="20" min="0" max="100" step="5" class="input-on-blue" />
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">LEAK 3 · WEBSITE CONVERSION</div>
+
+      <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <div>
+          <label class="label-on-blue">Monthly website visitors</label>
+          <input type="number" id="f-traffic" value="1800" min="0" step="50" class="input-on-blue" />
+        </div>
+        <div>
+          <label class="label-on-blue">Visitors who become leads (%)</label>
+          <input type="number" id="f-conv" value="1.5" min="0" max="100" step="0.1" class="input-on-blue" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO LOSS CARD -->
+  <div class="white-card" style="padding: 1.75rem; margin-bottom: 14px;">
+    <div class="hero-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: center;">
+      <div>
+        <div style="font-size: 11px; letter-spacing: 2px; color: #B8392B; font-weight: 600; margin-bottom: 8px;">YOU'RE LEAKING</div>
+        <div id="monthly-loss" class="monthly-loss-num" style="font-size: 48px; font-weight: 600; line-height: 1; margin-bottom: 6px; font-variant-numeric: tabular-nums; letter-spacing: -1px; color: #0F1B3D;">—</div>
+        <div style="font-size: 13px; color: #5F5E5A;">per month in unrealized revenue</div>
+      </div>
+      <div style="border-left: 0.5px solid rgba(15,27,61,0.15); padding-left: 1.5rem;">
+        <div style="font-size: 11px; letter-spacing: 2px; color: #888780; font-weight: 600; margin-bottom: 8px;">12-MONTH IMPACT</div>
+        <div id="annual-loss" class="annual-loss-num" style="font-size: 32px; font-weight: 600; line-height: 1; margin-bottom: 6px; font-variant-numeric: tabular-nums; color: #B8392B; letter-spacing: -0.5px;">—</div>
+        <div style="font-size: 12px; color: #888780;">cumulative if nothing changes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCORE CARD -->
+  <div class="blue-card" style="padding: 1.5rem; margin-bottom: 14px;">
+    <svg class="tri-bg" viewBox="0 0 700 220" preserveAspectRatio="xMaxYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="700,220 700,80 540,220" fill="none" stroke="#E8C05A" stroke-width="1.5" opacity="0.40"/>
+      <polygon points="685,210 685,135 600,210" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.25"/>
+      <polygon points="50,40 75,40 62,20" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.45"/>
+      <polygon points="200,60 220,60 210,42" fill="none" stroke="#E8C05A" stroke-width="0.7" opacity="0.30"/>
+      <polygon points="120,160 145,160 132,140" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.35"/>
+    </svg>
+
+    <div class="tri-content">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 2px; color: #E8C05A; font-weight: 600; margin-bottom: 4px;">REVENUE LEAK SCORE</div>
+          <div style="font-size: 13px; color: rgba(255,255,255,0.7);">Your local SEO health, scored 0–100</div>
+        </div>
+        <div style="text-align: right;">
+          <span id="score-num" style="font-size: 44px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; color: #FFFFFF;">—</span>
+          <span style="font-size: 18px; color: rgba(255,255,255,0.5); font-weight: 500;">/100</span>
+          <div id="score-label" style="font-size: 12px; font-weight: 500; margin-top: 4px;">—</div>
+        </div>
+      </div>
+
+      <div style="height: 12px; background: rgba(255,255,255,0.10); border-radius: 6px; overflow: hidden; margin-bottom: 6px; position: relative;">
+        <div id="score-bar" style="height: 100%; width: 0%; transition: width 0.5s ease, background 0.3s ease; border-radius: 6px;"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 1px; font-weight: 500;">
+        <span>CRITICAL</span>
+        <span>NEEDS WORK</span>
+        <span>HEALTHY</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAK CARDS -->
+  <div class="grid-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+
+    <div id="leak-gbp" class="blue-card" style="padding: 1rem; border-left: 3px solid rgba(232,192,90,0.3);">
+      <svg class="tri-bg" viewBox="0 0 220 140" preserveAspectRatio="xMaxYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="220,140 220,70 140,140" fill="none" stroke="#E8C05A" stroke-width="1" opacity="0.40"/>
+        <polygon points="20,30 35,30 27,16" fill="none" stroke="#E8C05A" stroke-width="0.7" opacity="0.40"/>
+        <polygon points="80,18 95,18 87,4" fill="none" stroke="#E8C05A" stroke-width="0.6" opacity="0.30"/>
+      </svg>
+      <div class="tri-content">
+        <div style="font-size: 10px; letter-spacing: 1.5px; color: #E8C05A; font-weight: 600; margin-bottom: 6px;">GBP VISIBILITY</div>
+        <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px;">
+          <span id="leak-gbp-status" style="font-size: 14px; font-weight: 500;">—</span>
+          <span class="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3);"></span>
+        </div>
+        <div id="leak-gbp-amount" style="font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.2; color: #FFFFFF;">—</div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">lost / mo from rank position</div>
+      </div>
+    </div>
+
+    <div id="leak-rev" class="blue-card" style="padding: 1rem; border-left: 3px solid rgba(232,192,90,0.3);">
+      <svg class="tri-bg" viewBox="0 0 220 140" preserveAspectRatio="xMaxYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="220,140 220,70 140,140" fill="none" stroke="#E8C05A" stroke-width="1" opacity="0.40"/>
+        <polygon points="30,40 45,40 37,26" fill="none" stroke="#E8C05A" stroke-width="0.7" opacity="0.40"/>
+        <polygon points="100,22 115,22 107,8" fill="none" stroke="#E8C05A" stroke-width="0.6" opacity="0.30"/>
+      </svg>
+      <div class="tri-content">
+        <div style="font-size: 10px; letter-spacing: 1.5px; color: #E8C05A; font-weight: 600; margin-bottom: 6px;">REPUTATION</div>
+        <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px;">
+          <span id="leak-rev-status" style="font-size: 14px; font-weight: 500;">—</span>
+          <span class="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3);"></span>
+        </div>
+        <div id="leak-rev-amount" style="font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.2; color: #FFFFFF;">—</div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">lost / mo from review gap</div>
+      </div>
+    </div>
+
+    <div id="leak-conv" class="blue-card" style="padding: 1rem; border-left: 3px solid rgba(232,192,90,0.3);">
+      <svg class="tri-bg" viewBox="0 0 220 140" preserveAspectRatio="xMaxYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="220,140 220,70 140,140" fill="none" stroke="#E8C05A" stroke-width="1" opacity="0.40"/>
+        <polygon points="25,28 40,28 32,14" fill="none" stroke="#E8C05A" stroke-width="0.7" opacity="0.40"/>
+        <polygon points="90,50 105,50 97,36" fill="none" stroke="#E8C05A" stroke-width="0.6" opacity="0.30"/>
+      </svg>
+      <div class="tri-content">
+        <div style="font-size: 10px; letter-spacing: 1.5px; color: #E8C05A; font-weight: 600; margin-bottom: 6px;">CONVERSION</div>
+        <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px;">
+          <span id="leak-conv-status" style="font-size: 14px; font-weight: 500;">—</span>
+          <span class="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3);"></span>
+        </div>
+        <div id="leak-conv-amount" style="font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.2; color: #FFFFFF;">—</div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">lost / mo from low conv rate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT FIXING THIS LOOKS LIKE -->
+  <div class="blue-card" style="padding: 1.25rem 1.5rem; margin-bottom: 14px;">
+    <svg class="tri-bg" viewBox="0 0 700 200" preserveAspectRatio="xMaxYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="700,200 700,70 540,200" fill="none" stroke="#E8C05A" stroke-width="1.5" opacity="0.40"/>
+      <polygon points="685,190 685,120 605,190" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.22"/>
+      <polygon points="60,30 85,30 72,12" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.40"/>
+      <polygon points="220,80 240,80 230,62" fill="none" stroke="#E8C05A" stroke-width="0.7" opacity="0.30"/>
+      <polygon points="140,150 162,150 151,132" fill="none" stroke="#E8C05A" stroke-width="0.7" opacity="0.32"/>
+    </svg>
+
+    <div class="tri-content">
+      <div style="font-size: 11px; letter-spacing: 2px; color: #E8C05A; font-weight: 600; margin-bottom: 12px;">WHAT FIXING THIS LOOKS LIKE</div>
+
+      <div style="margin-bottom: 12px;">
+        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px;">
+          <span style="color: rgba(255,255,255,0.7);">Current monthly revenue</span>
+          <span id="rev-current" style="font-weight: 500; font-variant-numeric: tabular-nums; color: #FFFFFF;">—</span>
+        </div>
+        <div style="height: 8px; background: rgba(255,255,255,0.10); border-radius: 4px; overflow: hidden;">
+          <div id="bar-current" style="height: 100%; width: 0%; background: #B8B7B0; border-radius: 4px; transition: width 0.5s;"></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px;">
+          <span style="color: rgba(255,255,255,0.7);">Potential with leaks fixed</span>
+          <span id="rev-potential" style="font-weight: 500; font-variant-numeric: tabular-nums; color: #00D89A;">—</span>
+        </div>
+        <div style="height: 8px; background: rgba(255,255,255,0.10); border-radius: 4px; overflow: hidden;">
+          <div id="bar-potential" style="height: 100%; width: 0%; background: #00D89A; border-radius: 4px; transition: width 0.5s;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHODOLOGY -->
+  <div class="blue-card" style="margin-bottom: 14px;">
+    <svg class="tri-bg" viewBox="0 0 700 800" preserveAspectRatio="xMaxYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="700,800 700,440 380,800" fill="none" stroke="#E8C05A" stroke-width="1.5" opacity="0.35"/>
+      <polygon points="680,780 680,540 490,780" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.20"/>
+      <polygon points="60,80 90,80 75,55" fill="none" stroke="#E8C05A" stroke-width="0.8" opacity="0.40"/>
+      <polygon points="220,40 245,40 232,18" fill="none" stroke="#E8C05A" stroke-width="0.7" opacity="0.30"/>
+      <polygon points="100,260 125,260 112,238" fill="none" stroke="#E8C05A" stroke-width="0.7" opacity="0.30"/>
+      <polygon points="60,520 85,520 72,498" fill="none" stroke="#E8C05A" stroke-width="0.7" opacity="0.25"/>
+      <polygon points="180,640 200,640 190,622" fill="none" stroke="#E8C05A" stroke-width="0.6" opacity="0.25"/>
+    </svg>
+
+    <div class="tri-content">
+      <button id="method-toggle" class="method-toggle">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 2px; color: #E8C05A; font-weight: 600; margin-bottom: 3px;">SHOW THE MATH</div>
+          <div style="font-size: 14px; font-weight: 500; color: #FFFFFF;">How these numbers are calculated</div>
+        </div>
+        <span id="method-arrow" style="font-size: 16px; color: rgba(255,255,255,0.7); transition: transform 0.2s; display: inline-block;">▾</span>
+      </button>
+
+      <div id="method-content" style="display: none; padding: 0 1.5rem 1.5rem; border-top: 0.5px solid rgba(232,192,90,0.2);">
+
+        <div style="margin-top: 1.25rem;">
+          <div style="font-size: 13px; font-weight: 600; color: #FFFFFF; margin-bottom: 6px;">Why this isn't pulled out of thin air</div>
+          <p style="font-size: 13px; color: rgba(255,255,255,0.75); margin: 0 0 1rem; line-height: 1.6;">Every number below is grounded in published industry data — local pack CTR studies from First Page Sage, conversion benchmarks from Ruler Analytics and Lucky Orange, and review-impact research from BrightLocal. The model is directional, not a promise — it tells you the order of magnitude of what you're leaking, not the exact dollar amount.</p>
+        </div>
+
+        <div style="background: rgba(0,0,0,0.25); border: 0.5px solid rgba(232,192,90,0.18); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem;">
+          <div style="font-size: 12px; font-weight: 600; color: #E8C05A; letter-spacing: 1.5px; margin-bottom: 8px;">LEAK 1 · GBP VISIBILITY</div>
+          <div style="font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.7;">
+            <p style="margin: 0 0 8px;">Local pack CTR by position (First Page Sage, 2026):</p>
+            <table style="width: 100%; font-size: 12px; font-variant-numeric: tabular-nums; margin-bottom: 10px; border-collapse: collapse; color: rgba(255,255,255,0.65);">
+              <tr><td style="padding: 2px 0;">Pos 1: 17.6%</td><td style="padding: 2px 0;">Pos 2: 16.0%</td><td style="padding: 2px 0;">Pos 3: 15.1%</td></tr>
+              <tr><td style="padding: 2px 0;">Pos 4: 8.2%</td><td style="padding: 2px 0;">Pos 5: 5.4%</td><td style="padding: 2px 0;">Pos 6: 3.8%</td></tr>
+              <tr><td style="padding: 2px 0;">Pos 7: 2.6%</td><td style="padding: 2px 0;">Pos 8: 1.9%</td><td style="padding: 2px 0;">Pos 9+: ~1.5%</td></tr>
+            </table>
+            <p style="margin: 0 0 6px;">Customers from GBP at your rank = <code style="font-size: 12px; color: #E8C05A;">views × CTR(rank) × 0.15 lead-to-customer rate</code></p>
+            <p style="margin: 0;">Potential at top-3 = <code style="font-size: 12px; color: #E8C05A;">views × 16.2% (avg of pos 1–3) × 0.15</code>. The gap × your customer value = leaked revenue. Note: top-3 of the local pack is the threshold — the curve cliffs hard at position 4.</p>
+          </div>
+        </div>
+
+        <div style="background: rgba(0,0,0,0.25); border: 0.5px solid rgba(232,192,90,0.18); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem;">
+          <div style="font-size: 12px; font-weight: 600; color: #E8C05A; letter-spacing: 1.5px; margin-bottom: 8px;">LEAK 2 · REPUTATION</div>
+          <div style="font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.7;">
+            <p style="margin: 0 0 8px;">Three signals roll into a single drag coefficient:</p>
+            <ul style="margin: 0 0 10px; padding-left: 18px;">
+              <li style="margin-bottom: 4px;"><span style="color: #FFFFFF;">Star rating gap</span> — distance from the 4.7 threshold (BrightLocal: ratings under 4.5 see meaningful click loss). Weighted 40%.</li>
+              <li style="margin-bottom: 4px;"><span style="color: #FFFFFF;">Review volume gap</span> — distance from a 100-review benchmark. Weighted 35%.</li>
+              <li style="margin-bottom: 4px;"><span style="color: #FFFFFF;">Response rate gap</span> — distance from an 80% response target. Weighted 25%.</li>
+            </ul>
+            <p style="margin: 0;">Drag is applied to your existing GBP click volume × customer value × 0.6 dampening. The 0.6 prevents double-counting, since reputation also indirectly affects rank (which is already counted in Leak 1).</p>
+          </div>
+        </div>
+
+        <div style="background: rgba(0,0,0,0.25); border: 0.5px solid rgba(232,192,90,0.18); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem;">
+          <div style="font-size: 12px; font-weight: 600; color: #E8C05A; letter-spacing: 1.5px; margin-bottom: 8px;">LEAK 3 · WEBSITE CONVERSION</div>
+          <div style="font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.7;">
+            <p style="margin: 0 0 8px;">Industry benchmark conversion rates (visitor → lead/customer):</p>
+            <table style="width: 100%; font-size: 12px; font-variant-numeric: tabular-nums; margin-bottom: 10px; border-collapse: collapse; color: rgba(255,255,255,0.65);">
+              <tr><td style="padding: 2px 0;">Legal: 3.0%</td><td style="padding: 2px 0;">Medical / Dental: 4.5%</td><td style="padding: 2px 0;">HVAC / Plumbing: 5.5%</td></tr>
+              <tr><td style="padding: 2px 0;">Contractor: 4.0%</td><td style="padding: 2px 0;">Auto: 5.0%</td><td style="padding: 2px 0;">Fitness: 6.0%</td></tr>
+              <tr><td style="padding: 2px 0;">Restaurant: 8.0%</td><td style="padding: 2px 0;">Salon / Spa: 7.0%</td><td style="padding: 2px 0;">Real estate: 2.5%</td></tr>
+              <tr><td style="padding: 2px 0;">Retail: 4.0%</td><td colspan="2" style="padding: 2px 0; color: rgba(255,255,255,0.5); font-style: italic;">Sources: Ruler, Lucky Orange, First Page Sage</td></tr>
+            </table>
+            <p style="margin: 0 0 6px;">Conversion leak = <code style="font-size: 12px; color: #E8C05A;">traffic × (industry_rate − your_rate) × customer_value</code></p>
+            <p style="margin: 0;">If your rate already meets or exceeds your industry benchmark, this leak is zero — the model only counts the gap.</p>
+          </div>
+        </div>
+
+        <div style="background: rgba(0,0,0,0.25); border: 0.5px solid rgba(232,192,90,0.18); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem;">
+          <div style="font-size: 12px; font-weight: 600; color: #FFFFFF; letter-spacing: 1.5px; margin-bottom: 8px;">REVENUE LEAK SCORE</div>
+          <div style="font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.7;">
+            <p style="margin: 0;">Composite of all three leak scores: <code style="font-size: 12px; color: #E8C05A;">(GBP × 0.35) + (Reputation × 0.30) + (Conversion × 0.35)</code>. GBP and conversion are weighted slightly higher because they sit at the top and bottom of the funnel — fixing them moves the most volume.</p>
+          </div>
+        </div>
+
+        <div style="font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.6; padding-top: 4px;">
+          <span style="font-weight: 500; color: rgba(255,255,255,0.8);">Caveats worth naming:</span> This model assumes traffic and intake stay constant. It doesn't account for seasonality, paid search overlap, or branded vs. non-branded traffic mix. The 0.15 lead-to-customer rate on GBP clicks is a generic average — for high-consideration purchases (legal, real estate) it'll be lower, for transactional services (HVAC emergency calls) it'll be higher. Use the output as a directional signal, not a forecast.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size: 12px; color: #888780; line-height: 1.5; text-align: center; padding: 4px 1rem;">
+    Built by <a href="https://www.linkedin.com/in/gabriel-newman-b69aa3299/" style="color: #0F1B3D; text-decoration: underline;">Gabriel Newman</a> · Local SEO methodology grounded in BrightLocal, First Page Sage, Ruler Analytics, and Lucky Orange research
+  </div>
+
+</main>
+
+<script>
+(function() {
+  var industries = {
+    legal:      { conv: 3.0 },
+    medical:    { conv: 4.5 },
+    hvac:       { conv: 5.5 },
+    contractor: { conv: 4.0 },
+    auto:       { conv: 5.0 },
+    fitness:    { conv: 6.0 },
+    restaurant: { conv: 8.0 },
+    salon:      { conv: 7.0 },
+    realestate: { conv: 2.5 },
+    retail:     { conv: 4.0 }
+  };
+
+  var localPackCTR = {
+    1: 0.176, 2: 0.160, 3: 0.151, 4: 0.082, 5: 0.054,
+    6: 0.038, 7: 0.026, 8: 0.019, 9: 0.015, 10: 0.012
+  };
+
+  function getCTR(rank) {
+    if (rank <= 1) return localPackCTR[1];
+    if (rank >= 10) return 0.01;
+    return localPackCTR[Math.round(rank)] || 0.01;
+  }
+
+  function fmt(n) {
+    n = Math.round(n);
+    if (n >= 1000000) return '$' + (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (n >= 1000) return '$' + (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    return '$' + n.toLocaleString();
+  }
+
+  function fmtFull(n) {
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function setLeakCard(id, score, amount) {
+    var card = document.getElementById('leak-' + id);
+    var status = document.getElementById('leak-' + id + '-status');
+    var amt = document.getElementById('leak-' + id + '-amount');
+    var dot = card.querySelector('.status-dot');
+
+    var color, label;
+    if (score >= 75) { color = '#00D89A'; label = 'Healthy'; }
+    else if (score >= 40) { color = '#F0B23A'; label = 'Leaking'; }
+    else { color = '#FF6B4A'; label = 'Critical'; }
+
+    card.style.borderLeftColor = color;
+    status.textContent = label;
+    status.style.color = color;
+    dot.style.background = color;
+    amt.textContent = fmt(amount);
+  }
+
+  function val(id) {
+    var v = document.getElementById(id).value;
+    return v === '' ? 0 : parseFloat(v);
+  }
+
+  function calculate() {
+    var industry = document.getElementById('f-industry').value;
+    var cv = val('f-cv');
+    var views = val('f-views');
+    var rank = val('f-rank') || 10;
+    var rating = val('f-rating');
+    var reviews = val('f-reviews');
+    var respond = val('f-respond');
+    var traffic = val('f-traffic');
+    var conv = val('f-conv');
+
+    var benchmark = industries[industry] || industries.hvac;
+
+    var currentRankCTR = getCTR(rank);
+    var top3CTR = (localPackCTR[1] + localPackCTR[2] + localPackCTR[3]) / 3;
+    var currentGBPLeads = views * currentRankCTR * 0.15;
+    var potentialGBPLeads = views * top3CTR * 0.15;
+    var gbpLeak = Math.max(0, (potentialGBPLeads - currentGBPLeads) * cv);
+    var gbpScore = Math.min(100, (currentRankCTR / top3CTR) * 100);
+
+    var ratingGap = Math.max(0, 4.7 - rating);
+    var reviewGap = Math.max(0, 100 - reviews) / 100;
+    var responseGap = Math.max(0, 80 - respond) / 100;
+    var reputationDrag = (ratingGap * 0.4) + (reviewGap * 0.35) + (responseGap * 0.25);
+    var repLeak = currentGBPLeads * reputationDrag * cv * 0.6;
+    var repScore = Math.max(0, 100 - (reputationDrag * 100));
+
+    var currentLeads = traffic * (conv / 100);
+    var potentialLeads = traffic * (benchmark.conv / 100);
+    var convLeak = Math.max(0, (potentialLeads - currentLeads) * cv);
+    var convScore = Math.min(100, (conv / benchmark.conv) * 100);
+
+    var totalLeak = gbpLeak + repLeak + convLeak;
+    var annualLeak = totalLeak * 12;
+
+    var overallScore = Math.round((gbpScore * 0.35) + (repScore * 0.30) + (convScore * 0.35));
+
+    document.getElementById('monthly-loss').textContent = fmt(totalLeak);
+    document.getElementById('annual-loss').textContent = fmt(annualLeak);
+
+    document.getElementById('score-num').textContent = overallScore;
+    var scoreBar = document.getElementById('score-bar');
+    var scoreLabel = document.getElementById('score-label');
+    scoreBar.style.width = overallScore + '%';
+
+    var scoreColor, scoreText;
+    if (overallScore >= 75) { scoreColor = '#00D89A'; scoreText = 'Healthy'; }
+    else if (overallScore >= 40) { scoreColor = '#F0B23A'; scoreText = 'Needs work'; }
+    else { scoreColor = '#FF6B4A'; scoreText = 'Critical'; }
+    scoreBar.style.background = scoreColor;
+    scoreLabel.textContent = scoreText;
+    scoreLabel.style.color = scoreColor;
+
+    setLeakCard('gbp', gbpScore, gbpLeak);
+    setLeakCard('rev', repScore, repLeak);
+    setLeakCard('conv', convScore, convLeak);
+
+    var currentRev = currentLeads * cv;
+    var potentialRev = currentRev + totalLeak;
+    document.getElementById('rev-current').textContent = fmtFull(currentRev) + '/mo';
+    document.getElementById('rev-potential').textContent = fmtFull(potentialRev) + '/mo';
+
+    var maxRev = Math.max(currentRev, potentialRev, 1);
+    document.getElementById('bar-current').style.width = ((currentRev / maxRev) * 100) + '%';
+    document.getElementById('bar-potential').style.width = ((potentialRev / maxRev) * 100) + '%';
+  }
+
+  ['f-industry','f-cv','f-views','f-rank','f-rating','f-reviews','f-respond','f-traffic','f-conv'].forEach(function(id) {
+    document.getElementById(id).addEventListener('input', calculate);
+    document.getElementById(id).addEventListener('change', calculate);
+  });
+
+  var toggle = document.getElementById('method-toggle');
+  var content = document.getElementById('method-content');
+  var arrow = document.getElementById('method-arrow');
+  toggle.addEventListener('click', function() {
+    var isOpen = content.style.display === 'block';
+    content.style.display = isOpen ? 'none' : 'block';
+    arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+  });
+
+  calculate();
+})();
+</script>
+
+</body>
+</html>
